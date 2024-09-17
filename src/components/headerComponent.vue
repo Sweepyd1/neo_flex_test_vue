@@ -28,11 +28,15 @@
 </template>
 
 <script setup>
+
 import basket_svg from '@/svg/basket_svg.vue';
 import favourities_svg from '@/svg/favourities_svg.vue';
 </script>
 
 <style scoped lang="scss">
+span{
+    font-family: 'Montserrat', sans-serif;
+}
 .header {
     display: flex;
     justify-content: space-between;
@@ -62,31 +66,32 @@ import favourities_svg from '@/svg/favourities_svg.vue';
 
 .notification-badge {
     position: absolute;
-    /* Абсолютное позиционирование для круга */
+   
     top: 0;
-    /* Позиционируем в верхней части */
+   
     right: 0;
-    /* Позиционируем в правой части */
+   
     width: 20px;
-    /* Ширина круга */
+   
     height: 20px;
-    /* Высота круга */
+    
     background-color: #FFA542;
-    /* Цвет круга */
+    color: white;
+  
     border-radius: 50%;
-    /* Делаем круг */
+   
     display: flex;
-    /* Для центрирования текста */
+   
     justify-content: center;
-    /* Центрируем текст по горизонтали */
+   
     align-items: center;
-    /* Центрируем текст по вертикали */
+   
     transform: translate(50%, -50%);
-    /* Сдвигаем круг немного вправо и вверх для перекрытия */
+    
     font-size: 12px;
-    /* Размер шрифта для цифр */
+  
     font-weight: bold;
-    /* Жирный шрифт для цифр */
+   
 }
 
 

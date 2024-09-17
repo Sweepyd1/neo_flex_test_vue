@@ -9,64 +9,64 @@ import headerComponent from '@/components/headerComponent.vue';
 
 const wireless_headphones_list = [
     {
-        img:"/images/image_7.png",
-        title:"Apple AirPods",
-        price:9527,
-        rate:4.7
+        img: "/images/image_7.png",
+        title: "Apple AirPods",
+        price: 9527,
+        rate: 4.7
     },
     {
-        img:"/images/image_8.png",
-        title:"GERLAX GH-04",
-        price:6527,
-        rate:4.7
+        img: "/images/image_8.png",
+        title: "GERLAX GH-04",
+        price: 6527,
+        rate: 4.7
     },
     {
-        img:"/images/image_9.png",
-        title:"BOROFONE BO4",
-        price:7527,
-        rate:4.7
+        img: "/images/image_9.png",
+        title: "BOROFONE BO4",
+        price: 7527,
+        rate: 4.7
     },
 
-] 
+]
 
 const wired_headphones_list = [
     {
-        img:"/images/image_1.png",
-        title:"Apple BYZ S852I",
-        price:2927,
-        rate:4.7
+        img: "/images/image_1.png",
+        title: "Apple BYZ S852I",
+        price: 2927,
+        rate: 4.7
     },
     {
-        img:"/images/image_2.png",
-        title:"Apple EarPods",
-        price:2327,
-        rate:4.5
+        img: "/images/image_2.png",
+        title: "Apple EarPods",
+        price: 2327,
+        rate: 4.5
     },
     {
-        img:"/images/image_3.png",
-        title:"Apple EarPods",
-        price:2327,
-        rate:4.5
+        img: "/images/image_3.png",
+        title: "Apple EarPods",
+        price: 2327,
+        rate: 4.5
     },
     {
-        img:"/images/image_4.png",
-        title:"Apple BYZ S852I",
-        price:2927,
-        rate:4.7
+        img: "/images/image_4.png",
+        title: "Apple BYZ S852I",
+        price: 2927,
+        rate: 4.7
     },
     {
-        img:"/images/image_5.png",
-        title:"Apple EarPods",
-        price:2327,
-        rate:4.5
+        img: "/images/image_5.png",
+        title: "Apple EarPods",
+        price: 2327,
+        rate: 4.5
     },
     {
-        img:"/images/image_6.png",
-        title:"Apple EarPods",
-        price:2327,
-        rate:4.5
+        img: "/images/image_6.png",
+        title: "Apple EarPods",
+        price: 2327,
+        rate: 4.5
     },
-   
+
 ]
 </script>
 
@@ -75,25 +75,16 @@ const wired_headphones_list = [
 
 
         <div class="container">
-           <headerComponent></headerComponent>
+            <headerComponent></headerComponent>
             <div class="main">
                 <div class="title">
                     <span>Наушники</span>
                 </div>
 
                 <div class="headphones">
-                    <cart_Component
-                    v-for="(headphone, index) in wired_headphones_list"
-                    :key="index"
-                    :img="headphone.img"
-                    :title="headphone.title"
-                    :price="headphone.price"
-                    :rate="headphone.rate"
-                    
-                    
-                    
-                    />
-                    
+                    <cart_Component v-for="(headphone, index) in wired_headphones_list" :key="index"
+                        :img="headphone.img" :title="headphone.title" :price="headphone.price" :rate="headphone.rate" />
+
 
 
 
@@ -104,25 +95,17 @@ const wired_headphones_list = [
                     <span>Беспроводные Наушники</span>
                     <div class="headphones">
 
-                        <cart_Component
-                    v-for="(headphone, index) in wireless_headphones_list"
-                    :key="index"
-                    :img="headphone.img"
-                    :title="headphone.title"
-                    :price="headphone.price"
-                    :rate="headphone.rate"
-                    
-                    
-                    
-                    />
-                     
+                        <cart_Component v-for="(headphone, index) in wireless_headphones_list" :key="index"
+                            :img="headphone.img" :title="headphone.title" :price="headphone.price"
+                            :rate="headphone.rate" />
+
 
                     </div>
 
                 </div>
 
 
-               
+
             </div>
             <bottomBar></bottomBar>
 
@@ -137,7 +120,7 @@ const wired_headphones_list = [
 
 
 <style scoped lang="scss">
-span{
+span {
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -156,7 +139,7 @@ span{
 
 
 
-       
+
 
 
     }
@@ -165,12 +148,12 @@ span{
         margin-left: 10px;
         margin-top: 20px;
 
-        .title{
+        .title {
             margin-top: 27px;
-           
 
-            span{
-                color:#838383;
+
+            span {
+                color: #838383;
                 font-weight: 600;
             }
         }
@@ -187,23 +170,23 @@ span{
 
         }
 
-        .wireless_headphones_title{
-            
-            margin-top: 27px;
-            
-           
+        .wireless_headphones_title {
 
-            span{
-                color:#838383;
+            margin-top: 27px;
+
+
+
+            span {
+                color: #838383;
                 font-weight: 600;
-                
+
 
             }
 
         }
 
 
-       
+
 
     }
 }

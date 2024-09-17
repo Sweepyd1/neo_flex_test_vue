@@ -4,7 +4,7 @@
             <trash_svg></trash_svg>
         </div>
         <div class="image">
-            <img src="/images/image.png">
+            <img src="/images/image_1.png">
 
 
             <div class="info">
@@ -58,7 +58,7 @@ span {
 }
 
 .headphone {
-    width: 45%;
+    width: 40%;
     height: auto;
     background-color: white;
     border-radius: 30px;
