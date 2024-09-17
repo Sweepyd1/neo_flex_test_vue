@@ -1,16 +1,16 @@
 <template>
     <div class="headphone">
         <div class="image">
-            <img src="/images/image.png">
+            <img :src="img">
         </div>
 
         <div class="title_and_price">
             <div class="title">
-                <span>Apple BYZ S852I</span>
+                <span>{{ props.title }}</span>
 
             </div>
             <div class="price">
-                <span>2927 ₽</span>
+                <span>{{ props.price }} ₽</span>
 
             </div>
         </div>
@@ -19,7 +19,7 @@
             <div class="count_stars">
                 <stars_svg></stars_svg>
            
-                <span>4.7</span>
+                <span>{{props.rate}}</span>
 
             </div>
           
@@ -39,6 +39,20 @@
 
 <script setup>
 import stars_svg from '../svg/stars_svg.vue';
+import { defineProps } from 'vue';
+
+
+
+const props = defineProps(
+    {
+        img:String,
+        title:String,
+        price:Number,
+        rate:Float32Array
+
+    }
+)
+
 </script>
 
 <style scoped lang="scss">
@@ -57,6 +71,16 @@ import stars_svg from '../svg/stars_svg.vue';
         display: flex;
         align-items: center;
         justify-content: center;
+        width: 100%;
+        margin-top: 5px;
+
+
+        img{
+            margin-top: 20px;
+            height: 23vh;
+         
+        }
+       
 
     }
     .title_and_price{
