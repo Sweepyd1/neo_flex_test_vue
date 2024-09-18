@@ -22,7 +22,7 @@
         <div class="count_of_headphone_and_total_price">
 
             <div class="count_of_headphone">
-                <div class="minus">
+                <div class="minus" @click="minusOne">
                     <minus_svg></minus_svg>
 
                 </div>
@@ -65,11 +65,25 @@ const props = defineProps(
 
     }
 )
-const emit = defineEmits(['updateCount']);
+
+const emit = defineEmits(['updateCount', 'minusCount']);
+
 function plusOne() {
   emit('updateCount', props.count + 1); 
-  const headphone = {img:props.img,title:props.title, price:props.price, rate:props.rate, count:props.count}
+  const headphone = {img:props.img,title:props.title, price:props.price, rate:props.rate, count:props.count + 1}
   basketStore.addInList(headphone)
+}
+
+function minusOne() {
+  if(props.count >1){
+    emit('minusCount', props.count -1); 
+  const headphone = {img:props.img,title:props.title, price:props.price, rate:props.rate, count:props.count}
+  basketStore.deleteElement(headphone) 
+  }
+  else{
+    // ничего
+  }
+  
 }
 </script>
 

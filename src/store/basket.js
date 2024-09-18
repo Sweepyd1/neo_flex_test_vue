@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+// import { ref } from "vue";
 
 export const useBasketStore = defineStore('basket', {
     state: () => ({
@@ -26,6 +27,45 @@ export const useBasketStore = defineStore('basket', {
 
             
             this.saveToCookie();
+        },
+
+        deleteElement(headphone){
+            this.loadFromCookie();
+
+            const existingHeadphone = this.headphoneListInBasket.find(item => item.title === headphone.title && item.img === headphone.img && item.count);
+
+            if (existingHeadphone) {
+                if (existingHeadphone.count > 1) {
+                    existingHeadphone.count -= 1;
+                } else {
+                    // Не делаем ничего, если count = 1
+                }
+            }
+            
+            
+           
+           
+
+            
+            this.saveToCookie();
+
+
+        },
+
+        getTotalPrice(){
+            this.loadFromCookie();
+            console.log("total price")
+            for(let i = 0; i<this.headphoneListInBasket.length; i++){
+                // console.log(this.headphoneListInBasket[i])
+                const count = this.headphoneListInBasket[i].count
+                const price = this.headphoneListInBasket[i].price
+                const total_price_for_element = count*price
+
+                this.totalPrice += total_price_for_element
+
+            }
+            console.log(this.totalPrice)
+            
         },
 
       

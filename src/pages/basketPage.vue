@@ -15,10 +15,15 @@ onMounted(()=>{
     console.log(cleanArray.value)
 })
 
-function updateCount(index) {
+function plusOne(index) {
   cleanArray.value[index].count +=1 ;
 }
+function minusOne(index) {
+  cleanArray.value[index].count -=1 ;
+}
 
+
+console.log(basketStore.getTotalPrice())
 
 </script>
 
@@ -33,8 +38,8 @@ function updateCount(index) {
                 <div class="list_of_headphones">
                     <cart_in_basket v-for="(headphone, index) in cleanArray" :key="index"
                     :img="headphone.img" :count="headphone.count" :title="headphone.title" :price="headphone.price" :rate="headphone.rate"
-                    @updateCount="updateCount(index)"
-                    
+                    @updateCount="plusOne(index)"
+                    @minusCount="minusOne(index)"
                     
                     
                     />
@@ -124,32 +129,33 @@ span {
        
     }
 
-    .total_price_block{
-            background-color: red;
-            position: absolute;
-            left: 50%;
-            width: 350px; 
-            height: 120px;
-            margin-top: 25px;
-
-            .total_price{
-                width: 100%;
-                height: 100%;
-                background-color: black;
-                border-radius: 30px;
-
-                .buy_button{
-                    width: 100%;
-                   
-                    height: 50%;
-                    background-color: white;
-                    border-radius: 20px;
-                    z-index: 1;
-                 
-
-                }
-            }
+    .total_price_block {
+        position: absolute;
+        left: 60%;
+        width: 350px; 
+        height: 180px;
+        margin-top: 25px;
+        transform: translateX(-50%); /* Центрирование по горизонтали */
     }
+    
+    .total_price {
+        width: 100%;
+        height: 58%;
+        background-color: #FFFFFF;
+        border-radius: 30px;
+        position: absolute; /* Размещение внутри родительского элемента */
+        top: 0; /* Верхний край */
+    }
+    
+    .buy_button {
+        width: 100%;
+        height: 58%;
+        background-color: black;
+        border-radius: 30px;
+        position: absolute; /* Размещение внутри родительского элемента */
+        bottom: 0; /* Нижний край */
+    }
+    
 
     .bottom_bar{
      
