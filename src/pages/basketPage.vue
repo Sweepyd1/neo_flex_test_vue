@@ -10,9 +10,9 @@ const basketStore = useBasketStore()
 const cleanArray = ref()
 
 onMounted(()=>{
-    console.log(basketStore.getCount())
+   
     cleanArray.value = toRaw(basketStore.getList());
-    console.log(cleanArray.value)
+   
 })
 
 function plusOne(index) {
@@ -23,7 +23,7 @@ function minusOne(index) {
 }
 
 
-console.log(basketStore.getTotalPrice())
+
 
 </script>
 
@@ -45,14 +45,16 @@ console.log(basketStore.getTotalPrice())
                     />
                    
 
-                    <div class="total_price_block">
+                    <!-- <div class="total_price_block">
                         <div class="total_price">
+                            <span>ИТОГО</span>
+                            <span>₽ 2 927</span>
                             <div class="buy_button">
     
                             </div>
                         </div>
     
-                    </div>
+                    </div> -->
                   
                     
                 </div>
@@ -136,6 +138,7 @@ span {
         height: 180px;
         margin-top: 25px;
         transform: translateX(-50%); /* Центрирование по горизонтали */
+       
     }
     
     .total_price {
@@ -145,6 +148,10 @@ span {
         border-radius: 30px;
         position: absolute; /* Размещение внутри родительского элемента */
         top: 0; /* Верхний край */
+
+        display: flex;
+        align-items: start;
+        justify-content: space-between;
     }
     
     .buy_button {

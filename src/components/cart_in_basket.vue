@@ -37,7 +37,7 @@
             </div>
 
             <div class="total_price">
-                <span> 2 927 ₽</span>
+                <span>{{total_price_element}}</span>
 
             </div>
 
@@ -51,9 +51,10 @@ import minus_svg from '@/svg/minus_svg.vue';
 import plus_svg from '@/svg/plus_svg.vue';
 import trash_svg from '@/svg/trash_svg.vue';
 import { useBasketStore } from '@/store/basket';
-import { defineProps, defineEmits } from 'vue';
+import { defineProps, defineEmits, ref } from 'vue';
 
 const basketStore = useBasketStore()
+
 
 const props = defineProps(
     {
@@ -65,13 +66,15 @@ const props = defineProps(
 
     }
 )
-
+const total_price_element = ref(props.price * props.count);
 const emit = defineEmits(['updateCount', 'minusCount']);
 
 function plusOne() {
   emit('updateCount', props.count + 1); 
   const headphone = {img:props.img,title:props.title, price:props.price, rate:props.rate, count:props.count + 1}
   basketStore.addInList(headphone)
+  total_price_element.value = props.price * (props.count + 1);
+  
 }
 
 function minusOne() {
@@ -79,12 +82,18 @@ function minusOne() {
     emit('minusCount', props.count -1); 
   const headphone = {img:props.img,title:props.title, price:props.price, rate:props.rate, count:props.count}
   basketStore.deleteElement(headphone) 
+  total_price_element.value = props.price * (props.count - 1);
+  
   }
   else{
     // ничего
   }
   
 }
+
+
+
+
 </script>
 
 <style scoped lang="scss">

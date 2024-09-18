@@ -1,6 +1,6 @@
 <template>
     <div class="header">
-        <div class="logo">
+        <div class="logo" @click="goHome">
             <span>QPICK</span>
 
         </div>
@@ -15,6 +15,9 @@
             </div>
             <div class="basket">
                 <basket_svg></basket_svg>
+                <div class="notification-badge">
+                    {{ countHeadphone }}
+                </div>
 
             </div>
 
@@ -31,6 +34,26 @@
 
 import basket_svg from '@/svg/basket_svg.vue';
 import favourities_svg from '@/svg/favourities_svg.vue';
+
+import { useRouter } from 'vue-router';
+import { useBasketStore } from '@/store/basket';
+import {  computed } from 'vue';
+const basketStore = useBasketStore()
+
+
+
+const router = useRouter()
+
+function goHome(){
+    router.push("/")
+
+}
+
+const countHeadphone = computed(() => {
+    return basketStore.getCountFromList();
+});
+
+
 </script>
 
 <style scoped lang="scss">
@@ -63,7 +86,10 @@ span{
     display: inline-block;
     /* Чтобы обернуть содержимое */
 }
-
+.basket{
+    position: relative;
+    display: inline-block;
+}
 .notification-badge {
     position: absolute;
    

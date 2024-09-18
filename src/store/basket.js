@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+
 // import { ref } from "vue";
 
 export const useBasketStore = defineStore('basket', {
@@ -13,6 +14,7 @@ export const useBasketStore = defineStore('basket', {
         addInList(headphone) {
             // Загружаем данные из cookie перед добавлением
             this.loadFromCookie();
+           
 
             // Добавляем новый элемент
             const existingHeadphone = this.headphoneListInBasket.find(item => item.title === headphone.title && item.img === headphone.img && item.count);
@@ -23,6 +25,7 @@ export const useBasketStore = defineStore('basket', {
             }else{
                 this.headphoneListInBasket.push(headphone);
             }
+          
            
 
             
@@ -31,6 +34,7 @@ export const useBasketStore = defineStore('basket', {
 
         deleteElement(headphone){
             this.loadFromCookie();
+            
 
             const existingHeadphone = this.headphoneListInBasket.find(item => item.title === headphone.title && item.img === headphone.img && item.count);
 
@@ -41,12 +45,13 @@ export const useBasketStore = defineStore('basket', {
                     // Не делаем ничего, если count = 1
                 }
             }
+          
             
             
            
            
 
-            
+          
             this.saveToCookie();
 
 
@@ -54,9 +59,9 @@ export const useBasketStore = defineStore('basket', {
 
         getTotalPrice(){
             this.loadFromCookie();
-            console.log("total price")
+           
             for(let i = 0; i<this.headphoneListInBasket.length; i++){
-                // console.log(this.headphoneListInBasket[i])
+               
                 const count = this.headphoneListInBasket[i].count
                 const price = this.headphoneListInBasket[i].price
                 const total_price_for_element = count*price
@@ -64,17 +69,32 @@ export const useBasketStore = defineStore('basket', {
                 this.totalPrice += total_price_for_element
 
             }
-            console.log(this.totalPrice)
+           
             
+        },
+        getCountFromList() {
+            let count = 0;
+            for (let i = 0; i < this.headphoneListInBasket.length; i++) {
+                count += this.headphoneListInBasket[i].count;
+            }
+            return count;
         },
 
       
 
-        getCount() {
-            return this.headphoneListInBasket.length;
-        },
+        // getCount() {
+        //     this.loadFromCookie();
+           
+        //     for (let i=0; i<this.headphoneListInBasket.length; i++){
+        //         console.log("all data")
+        //         console.log(this.headphoneListInBasket[i])
+        //         this.countHeadphone += this.headphoneListInBasket[i].count
+
+        //     }
+        //     return this.countHeadphone
+        // },
         getList() {
-            // Загружаем данные из cookie перед возвратом списка
+            
             this.loadFromCookie();
             return this.headphoneListInBasket;
         },
@@ -88,14 +108,14 @@ export const useBasketStore = defineStore('basket', {
             const cookieParts = cookieString.split('; ');
             let basketData = null;
 
-            // Ищем куку с данными наушников
+           
             cookieParts.forEach(part => {
                 if (part.startsWith('headphoneList=')) {
                     basketData = part.substring('headphoneList='.length);
                 }
             });
 
-            // Если кука найдена, парсим и обновляем состояние
+            
             if (basketData) {
                 this.headphoneListInBasket = JSON.parse(basketData);
             }
