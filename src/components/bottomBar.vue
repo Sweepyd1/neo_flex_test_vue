@@ -10,16 +10,12 @@ import viber_svg from '@/svg/viber_svg.vue';
     <div class="bottom_bar">
         <div class="inside">
     
-    
-    
             <div class="logo">
                 <span>QPICK</span>
     
             </div>
     
             <div class="actions">
-    
-               
                 <div >
                     <span>Избранное</span>
                 </div>
@@ -45,6 +41,8 @@ import viber_svg from '@/svg/viber_svg.vue';
                 <vk_svg></vk_svg>
                 <telegram_svg></telegram_svg>
                 <viber_svg></viber_svg>
+
+               
             </div>
     
         </div>
@@ -63,7 +61,11 @@ span{
     border-radius: 30px 30px 0px 0px;
     background-color: white;
     height: 15vh;
-   
+
+    @media (max-width: 700px) {
+        padding-bottom: 35%;
+
+     }
     
 
     .inside {
@@ -71,7 +73,13 @@ span{
         padding-top: 30px;
         display: flex;
         justify-content: space-between;
-      
+        
+       
+        @media (max-width: 700px) {
+           flex-direction: column;
+           align-items: center;
+           gap: 10px;
+        }
    
     }
 
@@ -87,6 +95,13 @@ span{
         display: flex;
         flex-direction: column;
         gap: 10px;
+
+        @media (max-width: 700px) {
+            flex-direction: row;
+            
+         }
+        
+       
     }
 
     .terms{
@@ -107,6 +122,8 @@ span{
         height: 3vh;
         align-items: center;
         margin-right:26px ;
+
+     
        
     }
   

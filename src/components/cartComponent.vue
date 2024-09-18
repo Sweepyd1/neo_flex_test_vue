@@ -86,6 +86,10 @@ const props = defineProps(
     border-radius: 30px;
     display: flex;
     flex-direction: column;
+
+    @media (max-width: 700px) {
+        padding-bottom: 30px;
+    }
    
 
 
@@ -96,12 +100,22 @@ const props = defineProps(
         width: 100%;
         margin-top: 5px;
 
+        
+
 
         img{
             margin-top: 20px;
             height: 23vh;
+
+           
          
         }
+
+        .image:hover{
+            margin-bottom: 20px;
+        }
+
+       
        
 
     }
@@ -143,6 +157,9 @@ const props = defineProps(
             align-items: center;
             
             gap: 10px;
+
+         
+            
             
          
 
@@ -154,12 +171,20 @@ const props = defineProps(
                 line-height: 25px;
                 font-size: 17px;
                 font-weight: 600px;
+                margin-top: 2px;
             }
 
            
            
 
           
+        }
+        .buy{
+            cursor: pointer;
+        }
+        .buy span:hover{
+            
+            color: gray;
         }
 
         .buy span{

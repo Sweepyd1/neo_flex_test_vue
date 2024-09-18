@@ -71,6 +71,9 @@ span{
         color: #101010;
         
     }
+    .logo:hover{
+        cursor: pointer;
+    }
 
 
 }

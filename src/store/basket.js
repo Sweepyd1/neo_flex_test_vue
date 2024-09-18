@@ -73,6 +73,7 @@ export const useBasketStore = defineStore('basket', {
             
         },
         getCountFromList() {
+            this.loadFromCookie()
             let count = 0;
             for (let i = 0; i < this.headphoneListInBasket.length; i++) {
                 count += this.headphoneListInBasket[i].count;

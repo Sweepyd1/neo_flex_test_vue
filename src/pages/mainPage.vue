@@ -142,21 +142,10 @@ span {
     height: auto;
 
     background-color: #EAEAEA;
-
     .container {
         margin-left: 8%;
-
         width: 85%;
-
-
-
-
-
-
-
-
     }
-
     .main {
         margin-left: 10px;
         margin-top: 20px;
@@ -178,29 +167,27 @@ span {
             /* 3 колонки одинаковой ширины */
             gap: 30px;
             margin-top: 20px;
-            /* Промежуток между элементами */
 
+            @media (max-width: 1070px) {
+                grid-template-columns: repeat(2, 1fr); /* Change to 2 колонки */
+            }
 
+            @media (max-width: 700px) {
+                grid-template-columns: repeat(1, 1fr); /* Change to 2 колонки */
+            }
+            
         }
-
         .wireless_headphones_title {
 
             margin-top: 27px;
-
-
-
             span {
                 color: #838383;
                 font-weight: 600;
-
-
             }
-
         }
-
-
-
-
     }
 }
+
+
+
 </style>
