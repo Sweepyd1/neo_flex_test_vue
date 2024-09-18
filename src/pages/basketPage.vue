@@ -3,6 +3,23 @@ import headerComponent from '@/components/headerComponent.vue';
 import bottomBar from '@/components/bottomBar.vue';
 import cart_in_basket from '@/components/cart_in_basket.vue';
 
+import { useBasketStore } from '@/store/basket';
+import { onMounted, ref, toRaw } from 'vue';
+const basketStore = useBasketStore()
+
+const cleanArray = ref()
+
+onMounted(()=>{
+    console.log(basketStore.getCount())
+    cleanArray.value = toRaw(basketStore.getList());
+    console.log(cleanArray.value)
+})
+
+function updateCount(index) {
+  cleanArray.value[index].count +=1 ;
+}
+
+
 </script>
 
 <template>
@@ -14,12 +31,14 @@ import cart_in_basket from '@/components/cart_in_basket.vue';
                     <span>Корзина</span>
                 </div>
                 <div class="list_of_headphones">
-                    <cart_in_basket></cart_in_basket>
-                    <cart_in_basket></cart_in_basket>
-                    <cart_in_basket></cart_in_basket>
-                    <cart_in_basket></cart_in_basket>
-                    <cart_in_basket></cart_in_basket>
-                    <cart_in_basket></cart_in_basket>
+                    <cart_in_basket v-for="(headphone, index) in cleanArray" :key="index"
+                    :img="headphone.img" :count="headphone.count" :title="headphone.title" :price="headphone.price" :rate="headphone.rate"
+                    @updateCount="updateCount(index)"
+                    
+                    
+                    
+                    />
+                   
 
                     <div class="total_price_block">
                         <div class="total_price">
@@ -116,15 +135,16 @@ span {
             .total_price{
                 width: 100%;
                 height: 100%;
-                background-color: white;
+                background-color: black;
                 border-radius: 30px;
 
                 .buy_button{
                     width: 100%;
                    
                     height: 50%;
-                    background-color: black;
+                    background-color: white;
                     border-radius: 20px;
+                    z-index: 1;
                  
 
                 }

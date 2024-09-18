@@ -4,16 +4,16 @@
             <trash_svg></trash_svg>
         </div>
         <div class="image">
-            <img src="/images/image_1.png">
+            <img :src="props.img">
 
 
             <div class="info">
                 <div class="name">
-                    <span>Apple BYZ S852I</span>
+                    <span>{{props.title}}</span>
 
                 </div>
                 <div class="price">
-                    <span>2 927 ₽</span>
+                    <span>{{props.price}}</span>
                 </div>
 
             </div>
@@ -27,10 +27,10 @@
 
                 </div>
                 <div class="count">
-                    <span>1</span>
+                    <span>{{props.count}}</span>
 
                 </div>
-                <div class="plus">
+                <div class="plus" @click="plusOne" >
                     <plus_svg></plus_svg>
 
                 </div>
@@ -50,6 +50,27 @@
 import minus_svg from '@/svg/minus_svg.vue';
 import plus_svg from '@/svg/plus_svg.vue';
 import trash_svg from '@/svg/trash_svg.vue';
+import { useBasketStore } from '@/store/basket';
+import { defineProps, defineEmits } from 'vue';
+
+const basketStore = useBasketStore()
+
+const props = defineProps(
+    {
+        img:String,
+        title:String,
+        price:Number,
+        count:Number,
+      
+
+    }
+)
+const emit = defineEmits(['updateCount']);
+function plusOne() {
+  emit('updateCount', props.count + 1); 
+  const headphone = {img:props.img,title:props.title, price:props.price, rate:props.rate, count:props.count}
+  basketStore.addInList(headphone)
+}
 </script>
 
 <style scoped lang="scss">

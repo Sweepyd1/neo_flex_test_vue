@@ -4,70 +4,83 @@
 import cart_Component from '@/components/cartComponent.vue';
 import bottomBar from '@/components/bottomBar.vue';
 import headerComponent from '@/components/headerComponent.vue';
+import {  ref } from 'vue';
 
 
-
-const wireless_headphones_list = [
+let wireless_headphones_list = ref([
     {
         img: "/images/image_7.png",
         title: "Apple AirPods",
         price: 9527,
-        rate: 4.7
+        rate: 4.7,
+       
     },
     {
         img: "/images/image_8.png",
         title: "GERLAX GH-04",
         price: 6527,
-        rate: 4.7
+        rate: 4.7,
+  
     },
     {
         img: "/images/image_9.png",
         title: "BOROFONE BO4",
         price: 7527,
-        rate: 4.7
+        rate: 4.7,
+    
     },
+]);
 
-]
-
-const wired_headphones_list = [
+let wired_headphones_list = ref([
     {
         img: "/images/image_1.png",
         title: "Apple BYZ S852I",
         price: 2927,
-        rate: 4.7
+        rate: 4.7,
+    
     },
     {
         img: "/images/image_2.png",
         title: "Apple EarPods",
         price: 2327,
-        rate: 4.5
+        rate: 4.5,
+      
     },
     {
         img: "/images/image_3.png",
         title: "Apple EarPods",
         price: 2327,
-        rate: 4.5
+        rate: 4.5,
+    
     },
     {
         img: "/images/image_4.png",
         title: "Apple BYZ S852I",
         price: 2927,
-        rate: 4.7
+        rate: 4.7,
+   
     },
     {
         img: "/images/image_5.png",
         title: "Apple EarPods",
         price: 2327,
-        rate: 4.5
+        rate: 4.5,
+     
     },
     {
         img: "/images/image_6.png",
         title: "Apple EarPods",
         price: 2327,
-        rate: 4.5
+        rate: 4.5,
+        
     },
+]);
 
-]
+
+
+
+
+
 </script>
 
 <template>
@@ -97,7 +110,7 @@ const wired_headphones_list = [
 
                         <cart_Component v-for="(headphone, index) in wireless_headphones_list" :key="index"
                             :img="headphone.img" :title="headphone.title" :price="headphone.price"
-                            :rate="headphone.rate" />
+                            :rate="headphone.rate"  />
 
 
                     </div>

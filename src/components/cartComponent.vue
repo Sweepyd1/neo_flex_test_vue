@@ -24,7 +24,7 @@
             </div>
           
          
-            <div class="buy">
+            <div class="buy" @click="addInBasket">
                 <span>Купить</span>
             </div>
 
@@ -39,7 +39,28 @@
 
 <script setup>
 import stars_svg from '../svg/stars_svg.vue';
-import { defineProps } from 'vue';
+import { defineProps, ref } from 'vue';
+import { useBasketStore } from '@/store/basket';
+import { toRaw } from 'vue';
+import { useRouter } from 'vue-router';
+
+const basketStore = useBasketStore()
+const count = ref(1)
+const router = useRouter()
+
+function addInBasket(){
+    
+    const headphone = {img:props.img,title:props.title, price:props.price, rate:props.rate, count:count.value}
+    basketStore.addInList(headphone)
+    const cleanArray = toRaw(basketStore.getList());
+    router.push("/basket")
+
+    console.log(cleanArray);
+
+
+    
+
+}
 
 
 
@@ -48,7 +69,8 @@ const props = defineProps(
         img:String,
         title:String,
         price:Number,
-        rate:Float32Array
+        rate:Float32Array,
+        count:Number,
 
     }
 )
