@@ -57,20 +57,23 @@ export const useBasketStore = defineStore('basket', {
 
         },
 
-        getTotalPrice(){
+        getTotalPrice() {
+            // Загружаем данные из cookie
             this.loadFromCookie();
-           
-            for(let i = 0; i<this.headphoneListInBasket.length; i++){
-               
-                const count = this.headphoneListInBasket[i].count
-                const price = this.headphoneListInBasket[i].price
-                const total_price_for_element = count*price
-
-                this.totalPrice += total_price_for_element
-
-            }
-           
             
+            // Сбрасываем общую цену перед расчетом
+            this.totalPrice = 0;
+        
+            // Проходим по каждому элементу в корзине
+            for (let i = 0; i < this.headphoneListInBasket.length; i++) {
+                const count = this.headphoneListInBasket[i].count; // Количество товара
+                const price = this.headphoneListInBasket[i].price; // Цена товара
+                const total_price_for_element = count * price; // Общая цена для текущего элемента
+        
+                this.totalPrice += total_price_for_element; // Добавляем к общей цене
+            }
+            
+            return this.totalPrice; // Возвращаем общую цену
         },
         getCountFromList() {
             this.loadFromCookie()

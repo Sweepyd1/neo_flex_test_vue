@@ -4,27 +4,40 @@ import bottomBar from '@/components/bottomBar.vue';
 import cart_in_basket from '@/components/cart_in_basket.vue';
 
 import { useBasketStore } from '@/store/basket';
-import { onMounted, ref, toRaw } from 'vue';
-const basketStore = useBasketStore()
+import { onMounted, ref, computed } from 'vue';
 
-const cleanArray = ref()
+const basketStore = useBasketStore();
 
-onMounted(()=>{
-   
-    cleanArray.value = toRaw(basketStore.getList());
-   
-})
+const cleanArray = ref([]); // Инициализируем как пустой массив
 
+onMounted(() => {
+    cleanArray.value = basketStore.getList(); // Загружаем список наушников из хранилища
+});
+
+// Функция для увеличения количества наушников
 function plusOne(index) {
-  cleanArray.value[index].count +=1 ;
+    cleanArray.value[index].count += 1; // Увеличиваем количество
 }
+
+// Функция для уменьшения количества наушников
 function minusOne(index) {
-  cleanArray.value[index].count -=1 ;
+    if (cleanArray.value[index].count > 0) { // Проверяем, чтобы количество не стало отрицательным
+        cleanArray.value[index].count -= 1; // Уменьшаем количество
+    }
 }
 
+// Вычисляемое свойство для итоговой цены
+const totalPrice = computed(() => {
+    let total_price = 0;
+    for (let i = 0; i < cleanArray.value.length; i++) {
+        const count = cleanArray.value[i].count; // Получаем количество
+        const price = cleanArray.value[i].price; // Получаем цену
+        const total_price_for_element = count * price; // Считаем общую цену для элемента
 
-
-
+        total_price += total_price_for_element; // Суммируем общую цену
+    }
+    return total_price; // Возвращаем итоговую цену
+});
 </script>
 
 <template>
@@ -45,16 +58,17 @@ function minusOne(index) {
                     />
                    
 
-                    <!-- <div class="total_price_block">
+                    <div class="total_price_block">
                         <div class="total_price">
                             <span>ИТОГО</span>
-                            <span>₽ 2 927</span>
+                            <span>₽ {{totalPrice}}</span>
                             <div class="buy_button">
+                                <span>Перейти к оформлению</span>
     
                             </div>
                         </div>
     
-                    </div> -->
+                    </div>
                   
                     
                 </div>
@@ -143,24 +157,41 @@ span {
     
     .total_price {
         width: 100%;
-        height: 58%;
+        height: 62%;
         background-color: #FFFFFF;
         border-radius: 30px;
-        position: absolute; /* Размещение внутри родительского элемента */
+        position: fixed; /* Размещение внутри родительского элемента */
         top: 0; /* Верхний край */
 
         display: flex;
         align-items: start;
         justify-content: space-between;
+        
+        span{
+            padding: 20px;
+            color: #000000;
+            font-weight: 600;
+        }
     }
     
     .buy_button {
         width: 100%;
-        height: 58%;
+        height: 53%;
         background-color: black;
         border-radius: 30px;
         position: absolute; /* Размещение внутри родительского элемента */
         bottom: 0; /* Нижний край */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        span{
+            color: white;
+            font-weight: 600;
+
+        }
+
+
     }
     
 

@@ -11,6 +11,11 @@
             </div>
             <div class="price">
                 <span>{{ props.price }} ₽</span>
+                <div class="old_price" v-if="props.isChanged">
+                    <span>{{props.oldPrice}}₽</span>
+
+                </div>
+
 
             </div>
         </div>
@@ -18,12 +23,12 @@
         <div class="stars_and_buy">
             <div class="count_stars">
                 <stars_svg></stars_svg>
-           
-                <span>{{props.rate}}</span>
+
+                <span>{{ props.rate }}</span>
 
             </div>
-          
-         
+
+
             <div class="buy" @click="addInBasket">
                 <span>Купить</span>
             </div>
@@ -32,7 +37,7 @@
         </div>
 
 
-        
+
     </div>
 
 </template>
@@ -48,9 +53,9 @@ const basketStore = useBasketStore()
 const count = ref(1)
 const router = useRouter()
 
-function addInBasket(){
-    
-    const headphone = {img:props.img,title:props.title, price:props.price, rate:props.rate, count:count.value}
+function addInBasket() {
+
+    const headphone = { img: props.img, title: props.title, price: props.price, rate: props.rate, count: count.value }
     basketStore.addInList(headphone)
     const cleanArray = toRaw(basketStore.getList());
     router.push("/basket")
@@ -58,7 +63,7 @@ function addInBasket(){
     console.log(cleanArray);
 
 
-    
+
 
 }
 
@@ -66,11 +71,14 @@ function addInBasket(){
 
 const props = defineProps(
     {
-        img:String,
-        title:String,
-        price:Number,
-        rate:Float32Array,
-        count:Number,
+        img: String,
+        title: String,
+        price: Number,
+        rate: Float32Array,
+        count: Number,
+        oldPrice:Number,
+        isChanged:Boolean,
+
 
     }
 )
@@ -78,8 +86,7 @@ const props = defineProps(
 </script>
 
 <style scoped lang="scss">
-
-.headphone{
+.headphone {
     background: white;
     width: 100%;
     height: 40vh;
@@ -90,83 +97,108 @@ const props = defineProps(
     @media (max-width: 700px) {
         padding-bottom: 30px;
     }
-   
 
 
-    .image{
+
+    .image {
         display: flex;
         align-items: center;
         justify-content: center;
         width: 100%;
         margin-top: 5px;
 
-        
 
 
-        img{
+
+        img {
             margin-top: 20px;
             height: 23vh;
 
-           
-         
+
+
         }
 
-        .image:hover{
+        .image:hover {
             margin-bottom: 20px;
         }
 
-       
-       
+
+
 
     }
-    .title_and_price{
+
+    .title_and_price {
         margin-top: 45px;
-      
+
         display: flex;
         justify-content: space-between;
         padding-left: 15px;
         width: 90%;
+        height: 2vh;
 
-        .title span{
+        .title span {
             font-family: 'Montserrat', sans-serif;
             color: #1C1C27;
             font-weight: bold;
         }
 
-        .price span{
-            font-family: 'Montserrat', sans-serif;
-            color: #FFA542;
-            font-weight: bold;
+        .price {
+            display: flex;
+            flex-direction: column;
 
+
+            span {
+                font-family: 'Montserrat', sans-serif;
+                color: #FFA542;
+                font-weight: bold;
+                font-size: 17px;
+
+
+
+
+            }
+
+            .old_price {
+                span{
+                    font-size: 13px;
+                    color: #FFCE7F;
+                    text-decoration: line-through;
+                    text-decoration-color: #FFCE7F;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+    
+                }
+            }
         }
     }
 
-    .stars_and_buy{
-        margin-top: 30px;
-      
+    .stars_and_buy {
+        
+        margin-top: 20px;
         display: flex;
         justify-content: space-between;
         padding-left: 15px;
         width: 90%;
         align-items: center;
-     
-      
 
-        .count_stars{
+
+
+        .count_stars {
             display: flex;
             align-items: center;
-            
+
             gap: 10px;
 
-         
-            
-            
-         
 
-            
+
+
+
+
+
             span {
                 font-family: 'Montserrat', sans-serif;
-               
+
                 color: #838383;
                 line-height: 25px;
                 font-size: 17px;
@@ -174,29 +206,30 @@ const props = defineProps(
                 margin-top: 2px;
             }
 
-           
-           
 
-          
+
+
+
         }
-        .buy{
+
+        .buy {
             cursor: pointer;
         }
-        .buy span:hover{
-            
+
+        .buy span:hover {
+
             color: gray;
         }
 
-        .buy span{
+        .buy span {
             font-family: 'Montserrat', sans-serif;
-            color:black;
+            color: black;
             font-weight: 600;
 
         }
 
     }
 
-  
-}
 
+}
 </style>

@@ -7,29 +7,7 @@ import headerComponent from '@/components/headerComponent.vue';
 import {  ref } from 'vue';
 
 
-let wireless_headphones_list = ref([
-    {
-        img: "/images/image_7.png",
-        title: "Apple AirPods",
-        price: 9527,
-        rate: 4.7,
-       
-    },
-    {
-        img: "/images/image_8.png",
-        title: "GERLAX GH-04",
-        price: 6527,
-        rate: 4.7,
-  
-    },
-    {
-        img: "/images/image_9.png",
-        title: "BOROFONE BO4",
-        price: 7527,
-        rate: 4.7,
-    
-    },
-]);
+
 
 let wired_headphones_list = ref([
     {
@@ -37,47 +15,78 @@ let wired_headphones_list = ref([
         title: "Apple BYZ S852I",
         price: 2927,
         rate: 4.7,
-    
+        isChanged: true,
+        oldPrice: 3527
     },
     {
         img: "/images/image_2.png",
         title: "Apple EarPods",
         price: 2327,
         rate: 4.5,
-      
+        isChanged: false,
+        oldPrice: 0
     },
     {
         img: "/images/image_3.png",
         title: "Apple EarPods",
         price: 2327,
         rate: 4.5,
-    
+        isChanged: false,
+        oldPrice: 0
     },
     {
         img: "/images/image_4.png",
         title: "Apple BYZ S852I",
         price: 2927,
         rate: 4.7,
-   
+        isChanged: false,
+        oldPrice: 0
     },
     {
         img: "/images/image_5.png",
         title: "Apple EarPods",
         price: 2327,
         rate: 4.5,
-     
+        isChanged: false,
+        oldPrice: 0
     },
     {
         img: "/images/image_6.png",
         title: "Apple EarPods",
         price: 2327,
         rate: 4.5,
-        
+        isChanged: false,
+        oldPrice: 0
     },
 ]);
 
 
-
+let wireless_headphones_list = ref([
+    {
+        img: "/images/image_7.png",
+        title: "Apple AirPods",
+        price: 9527,
+        rate: 4.7,
+        isChanged: false,
+        oldPrice: 0
+    },
+    {
+        img: "/images/image_8.png",
+        title: "GERLAX GH-04",
+        price: 6527,
+        rate: 4.7,
+        isChanged: false,
+        oldPrice: 0
+    },
+    {
+        img: "/images/image_9.png",
+        title: "BOROFONE BO4",
+        price: 7527,
+        rate: 4.7,
+        isChanged: false,
+        oldPrice: 0
+    },
+]);
 
 
 
@@ -96,7 +105,7 @@ let wired_headphones_list = ref([
 
                 <div class="headphones">
                     <cart_Component v-for="(headphone, index) in wired_headphones_list" :key="index"
-                        :img="headphone.img" :title="headphone.title" :price="headphone.price" :rate="headphone.rate" />
+                        :img="headphone.img" :title="headphone.title" :price="headphone.price" :rate="headphone.rate" :oldPrice="headphone.oldPrice" :isChanged="headphone.isChanged" />
 
 
 
@@ -110,7 +119,7 @@ let wired_headphones_list = ref([
 
                         <cart_Component v-for="(headphone, index) in wireless_headphones_list" :key="index"
                             :img="headphone.img" :title="headphone.title" :price="headphone.price"
-                            :rate="headphone.rate"  />
+                            :rate="headphone.rate" :oldPrice="headphone.oldPrice" :isChanged="headphone.isChanged" />
 
 
                     </div>
@@ -162,18 +171,18 @@ span {
 
         .headphones {
             display: grid;
-            /* Включаем grid */
+          
             grid-template-columns: repeat(3, 1fr);
-            /* 3 колонки одинаковой ширины */
+          
             gap: 30px;
             margin-top: 20px;
 
             @media (max-width: 1070px) {
-                grid-template-columns: repeat(2, 1fr); /* Change to 2 колонки */
+                grid-template-columns: repeat(2, 1fr);
             }
 
             @media (max-width: 700px) {
-                grid-template-columns: repeat(1, 1fr); /* Change to 2 колонки */
+                grid-template-columns: repeat(1, 1fr); 
             }
             
         }
