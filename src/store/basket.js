@@ -1,7 +1,4 @@
 import { defineStore } from "pinia";
-
-// import { ref } from "vue";
-
 export const useBasketStore = defineStore('basket', {
     state: () => ({
         headphoneListInBasket: [],
@@ -12,23 +9,16 @@ export const useBasketStore = defineStore('basket', {
 
     actions: {
         addInList(headphone) {
-            // Загружаем данные из cookie перед добавлением
-            this.loadFromCookie();
-           
-
-            // Добавляем новый элемент
+    
+            this.loadFromCookie();         
             const existingHeadphone = this.headphoneListInBasket.find(item => item.title === headphone.title && item.img === headphone.img && item.count);
-
             if (existingHeadphone) {
-                // Если наушник уже есть, увеличиваем количество
-                existingHeadphone.count += 1;
+                            existingHeadphone.count += 1;
             }else{
                 this.headphoneListInBasket.push(headphone);
             }
           
            
-
-            
             this.saveToCookie();
         },
 
@@ -45,35 +35,44 @@ export const useBasketStore = defineStore('basket', {
                     // Не делаем ничего, если count = 1
                 }
             }
-          
-            
-            
            
-           
-
-          
             this.saveToCookie();
 
 
         },
-
+        deleteFullElement(headphone) {
+            this.loadFromCookie(); 
+        
+      
+            const index = this.headphoneListInBasket.findIndex(item => 
+                item.title === headphone.title && 
+                item.img === headphone.img && 
+                item.count > 0 
+            );
+        
+           
+            if (index !== -1) {
+                this.headphoneListInBasket.splice(index, 1); 
+            }
+            this.saveToCookie()
+        },
         getTotalPrice() {
-            // Загружаем данные из cookie
+          
             this.loadFromCookie();
             
-            // Сбрасываем общую цену перед расчетом
+        
             this.totalPrice = 0;
         
-            // Проходим по каждому элементу в корзине
+            
             for (let i = 0; i < this.headphoneListInBasket.length; i++) {
-                const count = this.headphoneListInBasket[i].count; // Количество товара
-                const price = this.headphoneListInBasket[i].price; // Цена товара
-                const total_price_for_element = count * price; // Общая цена для текущего элемента
+                const count = this.headphoneListInBasket[i].count; 
+                const price = this.headphoneListInBasket[i].price;
+                const total_price_for_element = count * price; 
         
-                this.totalPrice += total_price_for_element; // Добавляем к общей цене
+                this.totalPrice += total_price_for_element; 
             }
             
-            return this.totalPrice; // Возвращаем общую цену
+            return this.totalPrice; 
         },
         getCountFromList() {
             this.loadFromCookie()
@@ -83,20 +82,6 @@ export const useBasketStore = defineStore('basket', {
             }
             return count;
         },
-
-      
-
-        // getCount() {
-        //     this.loadFromCookie();
-           
-        //     for (let i=0; i<this.headphoneListInBasket.length; i++){
-        //         console.log("all data")
-        //         console.log(this.headphoneListInBasket[i])
-        //         this.countHeadphone += this.headphoneListInBasket[i].count
-
-        //     }
-        //     return this.countHeadphone
-        // },
         getList() {
             
             this.loadFromCookie();
@@ -104,9 +89,8 @@ export const useBasketStore = defineStore('basket', {
         },
         saveToCookie() {
             const basketData = JSON.stringify(this.headphoneListInBasket);
-            document.cookie = `headphoneList=${basketData}; max-age=${3600 * 24 * 30}`; // 30 дней
+            document.cookie = `headphoneList=${basketData}; max-age=${3600 * 24 * 100}`; 
         },
-
         loadFromCookie() {
             const cookieString = document.cookie;
             const cookieParts = cookieString.split('; ');

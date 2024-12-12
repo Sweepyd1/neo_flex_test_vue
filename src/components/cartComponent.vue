@@ -1,5 +1,5 @@
 <template>
-    <div class="headphone">
+    <div class="headphone" @click="$emit('open-modal', props)">
         <div class="image">
             <img :src="img">
         </div>
@@ -53,19 +53,19 @@ const basketStore = useBasketStore()
 const count = ref(1)
 const router = useRouter()
 
+
+
 function addInBasket() {
 
     const headphone = { img: props.img, title: props.title, price: props.price, rate: props.rate, count: count.value }
     basketStore.addInList(headphone)
     const cleanArray = toRaw(basketStore.getList());
     router.push("/basket")
-
-    console.log(cleanArray);
-
-
-
+    console.log(cleanArray)
 
 }
+
+
 
 
 
@@ -89,14 +89,14 @@ const props = defineProps(
 .headphone {
     background: white;
     width: 100%;
-    height: 40vh;
+    height: auto;
     border-radius: 30px;
     display: flex;
     flex-direction: column;
+    padding-bottom: 30px;
 
-    @media (max-width: 700px) {
-        padding-bottom: 30px;
-    }
+    
+   
 
 
 
@@ -108,19 +108,25 @@ const props = defineProps(
         margin-top: 5px;
 
 
+      
+
 
 
         img {
             margin-top: 20px;
             height: 23vh;
+           
 
 
 
         }
 
-        .image:hover {
-            margin-bottom: 20px;
-        }
+       
+            :hover {
+             
+               cursor: pointer;
+            }
+       
 
 
 

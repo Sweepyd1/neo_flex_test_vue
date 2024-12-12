@@ -1,6 +1,6 @@
 <template>
     <div class="headphone">
-        <div class="trash">
+        <div class="trash" @click="deleteFullElement">
             <trash_svg></trash_svg>
         </div>
         <div class="image">
@@ -22,7 +22,7 @@
         <div class="count_of_headphone_and_total_price">
 
             <div class="count_of_headphone">
-                <div class="minus" @click="minusOne">
+                <div class="minus" @click="minusOne"  @mousedown.prevent>
                     <minus_svg></minus_svg>
 
                 </div>
@@ -30,7 +30,7 @@
                     <span>{{props.count}}</span>
 
                 </div>
-                <div class="plus" @click="plusOne" >
+                <div class="plus" @click="plusOne"  @mousedown.prevent >
                     <plus_svg></plus_svg>
 
                 </div>
@@ -62,12 +62,12 @@ const props = defineProps(
         title:String,
         price:Number,
         count:Number,
-      
+
 
     }
 )
 const total_price_element = ref(props.price * props.count);
-const emit = defineEmits(['updateCount', 'minusCount']);
+const emit = defineEmits(['updateCount', 'minusCount', 'deleteFullElement']);
 
 function plusOne() {
   emit('updateCount', props.count + 1); 
@@ -90,7 +90,13 @@ function minusOne() {
   }
   
 }
+function deleteFullElement(){
+    emit('deleteFullElement')
+    const headphone = {img:props.img,title:props.title, price:props.price, rate:props.rate, count:props.count}
+    basketStore.deleteFullElement(headphone)
 
+
+}
 
 
 
@@ -102,7 +108,7 @@ span {
 }
 
 .headphone {
-    width: 40%;
+    width: 100%;
     height: auto;
     background-color: white;
     border-radius: 30px;
@@ -120,6 +126,7 @@ span {
         display: flex;
         align-items: center;
         justify-content: center;
+        cursor: pointer;
 
       
         trash_svg {
@@ -137,10 +144,27 @@ span {
         padding-left: 18px;
         padding-top: 10px;
 
+        @media (max-width: 730px) {
+            flex-direction: column;
+         
+           
+           
+    
+         }
+
         .info{
             display: flex;
             flex-direction: column;
             gap: 12px;
+
+            @media (max-width: 730px) {
+                justify-content: center;
+                align-items: center;
+             
+               
+               
+        
+             }
 
             .name span{
                 font-size: 17px;
@@ -153,6 +177,14 @@ span {
                 color: #AAAAAA;
                 font-weight: 600;
                 font-size: 15px;
+
+                @media (max-width: 730px) {
+                    display: none;
+                 
+                   
+                   
+            
+                 }
 
 
             }
@@ -171,6 +203,14 @@ span {
             width: 20%;
             height: 15vh;
 
+            @media (max-width: 730px) {
+                width: 40%;
+             
+               
+               
+        
+             }
+
 
          
         }
@@ -181,7 +221,16 @@ span {
     .count_of_headphone_and_total_price {
         display: flex;
         justify-content: space-between;
-
+        
+        @media (max-width: 730px) {
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+         
+           
+           
+    
+         }
         .count_of_headphone {
             display: flex;
             padding-left: 25px;
@@ -203,11 +252,21 @@ span {
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                cursor: pointer;
             }
         }
 
         .total_price {
             margin-right: 30px;
+
+            @media (max-width: 730px) {
+                margin-right:0px ;
+                padding-left: 25px;
+             
+               
+               
+        
+             }
 
             span{
                 color: #1C1C27;

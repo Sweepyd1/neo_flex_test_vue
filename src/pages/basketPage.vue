@@ -2,75 +2,110 @@
 import headerComponent from '@/components/headerComponent.vue';
 import bottomBar from '@/components/bottomBar.vue';
 import cart_in_basket from '@/components/cart_in_basket.vue';
-
+import paymentForm from '@/components/modal_window/paymentForm.vue';
 import { useBasketStore } from '@/store/basket';
 import { onMounted, ref, computed } from 'vue';
 
 const basketStore = useBasketStore();
-
-const cleanArray = ref([]); // Инициализируем как пустой массив
+const isOpenPaymentWindow = ref(false)
+const cleanArray = ref([]);
 
 onMounted(() => {
-    cleanArray.value = basketStore.getList(); // Загружаем список наушников из хранилища
+    cleanArray.value = basketStore.getList(); 
 });
 
-// Функция для увеличения количества наушников
+
 function plusOne(index) {
-    cleanArray.value[index].count += 1; // Увеличиваем количество
+    cleanArray.value[index].count += 1; 
 }
 
-// Функция для уменьшения количества наушников
+
 function minusOne(index) {
-    if (cleanArray.value[index].count > 0) { // Проверяем, чтобы количество не стало отрицательным
-        cleanArray.value[index].count -= 1; // Уменьшаем количество
+    if (cleanArray.value[index].count > 0) { 
+        cleanArray.value[index].count -= 1; 
     }
 }
+function deleteFullElement(index){
+    if (index >= 0 && index < cleanArray.value.length) {
+      
+        cleanArray.value.splice(index, 1);
+    }
 
-// Вычисляемое свойство для итоговой цены
+
+
+}
+
 const totalPrice = computed(() => {
     let total_price = 0;
     for (let i = 0; i < cleanArray.value.length; i++) {
-        const count = cleanArray.value[i].count; // Получаем количество
-        const price = cleanArray.value[i].price; // Получаем цену
-        const total_price_for_element = count * price; // Считаем общую цену для элемента
+        const count = cleanArray.value[i].count; 
+        const price = cleanArray.value[i].price; 
+        const total_price_for_element = count * price; 
 
-        total_price += total_price_for_element; // Суммируем общую цену
+        total_price += total_price_for_element; 
     }
-    return total_price; // Возвращаем итоговую цену
+    return total_price;
 });
+
+
+function openPaymentWindow(){
+    isOpenPaymentWindow.value = true;
+
+}
+
+function closeWindow(){
+    isOpenPaymentWindow.value = false
+}
 </script>
 
 <template>
+   
     <div class="page">
+       
+        <div class="overlay" v-if="isOpenPaymentWindow"></div>
+
+        <paymentForm v-if="isOpenPaymentWindow"
+        @close-window="closeWindow"
+        
+        />
+
+        
+        
+      
         <div class="container">
+            
+           
             <headerComponent></headerComponent>
             <div class="main">
                 <div class="title">
                     <span>Корзина</span>
                 </div>
-                <div class="list_of_headphones">
-                    <cart_in_basket v-for="(headphone, index) in cleanArray" :key="index"
-                    :img="headphone.img" :count="headphone.count" :title="headphone.title" :price="headphone.price" :rate="headphone.rate"
-                    @updateCount="plusOne(index)"
-                    @minusCount="minusOne(index)"
-                    
-                    
-                    />
-                   
-
+                <div class="shopping_cart">
+                    <div class="list_of_headphones">
+                       
+                        <cart_in_basket v-for="(headphone, index) in cleanArray" :key="index"
+                            :img="headphone.img" :count="headphone.count" :title="headphone.title" 
+                            :price="headphone.price" :rate="headphone.rate"
+                            @updateCount="plusOne(index)"
+                            @minusCount="minusOne(index)"
+                            @deleteFullElement="deleteFullElement(index)"
+                        />
+                    </div>
+                
                     <div class="total_price_block">
                         <div class="total_price">
-                            <span>ИТОГО</span>
-                            <span>₽ {{totalPrice}}</span>
-                            <div class="buy_button">
-                                <span>Перейти к оформлению</span>
-    
+                            <div class="total_price_text">
+                                <span>ИТОГО</span>
+                                <span>₽ {{totalPrice}}</span>
                             </div>
+                            
+                            <div class="buy_button" @click="openPaymentWindow">
+                                <span>Перейти к оформлению</span>
+                            </div>
+                            
                         </div>
-    
+                       
                     </div>
-                  
-                    
                 </div>
 
                
@@ -78,7 +113,10 @@ const totalPrice = computed(() => {
             </div>
 
             <div class="botom_bar">
-                <bottomBar></bottomBar>
+                <bottomBar
+                :addKaz="true"
+                
+                />
                 </div>
 
           
@@ -95,14 +133,27 @@ span {
 .page {
     width: 100%;
     height: auto;
-   min-height: 98vh;
+    min-height: 98vh;
     height: auto;
+    position: relative;
     
     background-color: #EAEAEA;
+
+    .overlay {
+        position: fixed; 
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        z-index: 999; 
+    }
+
 
     .container {
         margin-left: 8%;
         flex: 1;
+        z-index: 1;
        
         width: 85%;
         
@@ -130,44 +181,66 @@ span {
 
 
 
-    .list_of_headphones {
-      
-        display: grid;
-        grid-template-columns: 1fr; 
-        gap: 20px; 
+    .shopping_cart {
+        display: flex;
+        gap: 10%; 
 
-        
-  
-       
-       
-        
+        @media (max-width: 1212px) {
+            flex-direction: column;
+           
+           
     
-       
+         }
     }
+    
+    .list_of_headphones {
+        display: flex;
+        flex-direction: column; 
+        gap: 20px;
+        width: 40%;
 
+        @media (max-width: 1212px) {
+            width: 100%;
+           
+    
+         }
+    }
+    
     .total_price_block {
-        position: absolute;
-        left: 60%;
-        width: 350px; 
-        height: 180px;
+        width: 23%; 
+        height: 120px;
         margin-top: 25px;
-        transform: translateX(-50%); /* Центрирование по горизонтали */
+        display: flex;
+        flex-direction: column;
+
+        @media (max-width: 1212px) {
+            width: 100%;
+            
+           
+    
+         }
        
     }
     
     .total_price {
         width: 100%;
-        height: 62%;
+    
         background-color: #FFFFFF;
         border-radius: 30px;
-        position: fixed; /* Размещение внутри родительского элемента */
-        top: 0; /* Верхний край */
-
         display: flex;
         align-items: start;
         justify-content: space-between;
+        flex-direction: column;
+
+        .total_price_text{
+            
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
         
-        span{
+        span {
             padding: 20px;
             color: #000000;
             font-weight: 600;
@@ -179,19 +252,15 @@ span {
         height: 53%;
         background-color: black;
         border-radius: 30px;
-        position: absolute; /* Размещение внутри родительского элемента */
-        bottom: 0; /* Нижний край */
         display: flex;
         align-items: center;
         justify-content: center;
-
-        span{
+        cursor: pointer;
+    
+        span {
             color: white;
             font-weight: 600;
-
         }
-
-
     }
     
 
